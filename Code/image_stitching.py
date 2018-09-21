@@ -52,10 +52,10 @@ def compute_features(img_src, img_dst):
     # Plot them
     src_corner_img = plot_corners_on_image(img_src, src_corners, True)
     disp(src_corner_img)
-    #cv2.imwrite('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Output_Images/build_left_harris_26_corners.jpg', src_corner_img)
+    #cv2.imwrite('../Output_Images/build_left_harris_26_corners.jpg', src_corner_img)
     dst_corner_img = plot_corners_on_image(img_dst, dst_corners, True)
     disp(dst_corner_img)
-    #cv2.imwrite('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Output_Images/build_right_harris_26_corners.jpg', dst_corner_img)
+    #cv2.imwrite('../Output_Images/build_right_harris_26_corners.jpg', dst_corner_img)
     return src_corners, dst_corners
 
 
@@ -113,20 +113,20 @@ def warp_source(src_corners, dst_corners, dst_shape, opencv = False):
         warp = perspective_transform(img_src, H, dst_shape)
         # Closing
         #warp = cv2.morphologyEx(warp, cv2.MORPH_CLOSE, np.ones((3, 3)))
-        #cv2.imwrite('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Output_Images/warp_without_opencv_closed.jpg', warp)
+        #cv2.imwrite('../Output_Images/warp_without_opencv_closed.jpg', warp)
     warp_with_corners = plot_corners_on_image(warp, dst_corners, True)
     disp(warp_with_corners)
-    #cv2.imwrite('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Output_Images/warp_corners_with_opencv.jpg', warp_with_corners)
+    #cv2.imwrite('../Output_Images/warp_corners_with_opencv.jpg', warp_with_corners)
     return warp
 
 
-img_src = cv2.imread('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Input_Images/build_left.jpg')
-img_dst = cv2.imread('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Input_Images/build_right.jpg')
+img_src = cv2.imread('../Input_Images/build_left.jpg')
+img_dst = cv2.imread('../Input_Images/build_right.jpg')
 img_dst_pad = padded_image(img_dst)
 src_corners, dst_corners = compute_features(img_src, img_dst_pad)
 warp = warp_source(src_corners, dst_corners, img_dst_pad.shape, True)
 stitched = stitch(img_dst_pad, warp)
 stitched = plot_corners_on_image(stitched, dst_corners, True)
 disp(stitched)
-#cv2.imwrite('/home/vignesh/Desktop/Computer-Vision-Assignments/Assignment_2/Output_Images/build_stitched_with_opencv.jpg', stitched)
+#cv2.imwrite('../Output_Images/build_stitched_with_opencv.jpg', stitched)
 cv2.destroyAllWindows()
